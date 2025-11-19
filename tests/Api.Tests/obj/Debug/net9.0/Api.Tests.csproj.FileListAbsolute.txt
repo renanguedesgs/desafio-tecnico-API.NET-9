@@ -97,3 +97,4 @@ C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Api.T
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Api.Tests\obj\Debug\net9.0\Api.Tests.pdb
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Api.Tests\obj\Debug\net9.0\Api.Tests.genruntimeconfig.cache
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Api.Tests\obj\Debug\net9.0\ref\Api.Tests.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Api.Tests\obj\Debug\net9.0\MvcTestingAppManifest.json

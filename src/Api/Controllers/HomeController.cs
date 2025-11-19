@@ -1,31 +1,20 @@
-using System.Diagnostics;
+using Application.UseCases;
 using Microsoft.AspNetCore.Mvc;
-using Api.Models;
 
 namespace Api.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
+    private readonly GetAllPatientsUseCase _useCase;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(GetAllPatientsUseCase useCase)
     {
-        _logger = logger;
+        _useCase = useCase;
     }
 
     public IActionResult Index()
     {
-        return View();
-    }
-
-    public IActionResult Privacy()
-    {
-        return View();
-    }
-
-    [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-    public IActionResult Error()
-    {
-        return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        var patients = _useCase.Execute();
+        return View(patients);
     }
 }

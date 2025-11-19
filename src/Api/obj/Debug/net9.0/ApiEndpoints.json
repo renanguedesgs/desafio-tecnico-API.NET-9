@@ -1,0 +1,12 @@
+[
+  {
+    "ContainingType": "Api.Controllers.ReportController",
+    "Method": "ProcessarRelatorio",
+    "RelativePath": "processar-relatorio",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  }
+]

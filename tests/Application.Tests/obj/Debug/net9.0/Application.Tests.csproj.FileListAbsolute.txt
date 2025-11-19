@@ -97,3 +97,14 @@ C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Appli
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\obj\Debug\net9.0\Application.Tests.pdb
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\obj\Debug\net9.0\Application.Tests.genruntimeconfig.cache
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\obj\Debug\net9.0\ref\Application.Tests.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\.msCoverageSourceRootsMapping_Application.Tests
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\CoverletSourceRootsMapping_Application.Tests
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\Castle.Core.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\Moq.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\System.Diagnostics.EventLog.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.Messages.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\runtimes\win\lib\net6.0\System.Diagnostics.EventLog.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\Application.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\Domain.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\Application.pdb
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.Tests\bin\Debug\net9.0\Domain.pdb
