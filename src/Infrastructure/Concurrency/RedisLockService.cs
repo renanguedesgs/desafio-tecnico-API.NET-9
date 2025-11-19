@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Domain.Abstractions;
+﻿using Domain.Abstractions;
 using StackExchange.Redis;
 
 namespace Infrastructure.Concurrency;
@@ -18,17 +13,32 @@ public class RedisLockService : ILockService
         _db = mux.GetDatabase();
     }
 
-    public async Task<bool> TryAcquireAsync(string key, TimeSpan ttl, CancellationToken ct = default)
+    public async Task<bool> AcquireAsync(
+        string resource,
+        TimeSpan expiry,
+        TimeSpan wait,
+        TimeSpan retryInterval,
+        CancellationToken ct = default)
     {
-        var fullKey = Prefix + key;
+        var fullKey = Prefix + resource;
         var token = Guid.NewGuid().ToString("N");
+        var end = DateTime.UtcNow + wait;
 
-        return await _db.StringSetAsync(fullKey, token, ttl, When.NotExists);
+        while (DateTime.UtcNow < end)
+        {
+            var acquired = await _db.StringSetAsync(fullKey, token, expiry, When.NotExists);
+            if (acquired)
+                return true;
+
+            await Task.Delay(retryInterval, ct);
+        }
+
+        return false;
     }
 
-    public async Task ReleaseAsync(string key)
+    public async Task ReleaseAsync(string resource)
     {
-        var fullKey = Prefix + key;
+        var fullKey = Prefix + resource;
         await _db.KeyDeleteAsync(fullKey);
     }
 }

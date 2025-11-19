@@ -1,0 +1,28 @@
+﻿@model Application.DTOs.PatientDto
+
+@{
+    ViewData["Title"] = "Detalhes do Paciente";
+}
+
+<div class="container py-4">
+    <h2 class="mb-3">Detalhes do Paciente</h2>
+
+    <dl class="row">
+        <dt class="col-sm-3">Nome</dt>
+        <dd class="col-sm-9">@Model.Name</dd>
+
+        <dt class="col-sm-3">Data de Nascimento</dt>
+        <dd class="col-sm-9">@Model.BirthDate.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Último Exame</dt>
+        <dd class="col-sm-9">@Model.LastExam</dd>
+    </dl>
+
+    <div class="mt-3">
+        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+        <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar</a>
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post" style="display:inline">
+            <button type="submit" class="btn btn-danger">Excluir</button>
+        </form>
+    </div>
+</div>

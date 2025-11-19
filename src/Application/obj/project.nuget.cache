@@ -1,8 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "X0XwfkJLFDo=",
+  "dgSpecHash": "mTiG27EjNQs=",
   "success": true,
   "projectFilePath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Application\\Application.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\Renan\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
+    "C:\\Users\\Renan\\.nuget\\packages\\fluentassertions\\6.12.2\\fluentassertions.6.12.2.nupkg.sha512",
+    "C:\\Users\\Renan\\.nuget\\packages\\moq\\4.20.72\\moq.4.20.72.nupkg.sha512",
+    "C:\\Users\\Renan\\.nuget\\packages\\system.configuration.configurationmanager\\4.4.0\\system.configuration.configurationmanager.4.4.0.nupkg.sha512",
+    "C:\\Users\\Renan\\.nuget\\packages\\system.diagnostics.eventlog\\6.0.0\\system.diagnostics.eventlog.6.0.0.nupkg.sha512",
+    "C:\\Users\\Renan\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.4.0\\system.security.cryptography.protecteddata.4.4.0.nupkg.sha512",
+    "C:\\Users\\Renan\\.nuget\\packages\\xunit.abstractions\\2.0.3\\xunit.abstractions.2.0.3.nupkg.sha512",
+    "C:\\Users\\Renan\\.nuget\\packages\\xunit.extensibility.core\\2.9.3\\xunit.extensibility.core.2.9.3.nupkg.sha512"
+  ],
   "logs": []
 }

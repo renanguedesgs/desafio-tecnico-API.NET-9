@@ -19,7 +19,13 @@ public class ReportController : ControllerBase
     public async Task<IActionResult> ProcessarRelatorio(CancellationToken ct)
     {
         _logger.LogInformation("Tentando adquirir o lock");
-        var acquired = await _lockService.TryAcquireAsync("processar-relatorio", TimeSpan.FromSeconds(10), ct);
+        var acquired = await _lockService.AcquireAsync(
+            "processar-relatorio",
+            expiry: TimeSpan.FromSeconds(10),
+            wait: TimeSpan.FromSeconds(5),
+            retryInterval: TimeSpan.FromMilliseconds(200),
+            ct);
+
         if (!acquired)
         {
             _logger.LogWarning("Recurso ocupado");
@@ -39,4 +45,5 @@ public class ReportController : ControllerBase
             _logger.LogInformation("Lock liberado");
         }
     }
+
 }

@@ -131,6 +131,20 @@
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[6.12.2, )"
+            },
+            "Moq": {
+              "target": "Package",
+              "version": "[4.20.72, )"
+            },
+            "xunit.extensibility.core": {
+              "target": "Package",
+              "version": "[2.9.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -244,6 +258,9 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
+              "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Application\\Application.csproj": {
+                "projectPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Application\\Application.csproj"
+              },
               "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Domain\\Domain.csproj": {
                 "projectPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Domain\\Domain.csproj"
               }
@@ -329,6 +346,9 @@
             "projectReferences": {
               "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Api\\Api.csproj": {
                 "projectPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Api\\Api.csproj"
+              },
+              "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }
@@ -349,25 +369,29 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "FluentAssertions": {
+              "target": "Package",
+              "version": "[6.*, )"
+            },
             "Microsoft.AspNetCore.Mvc.Testing": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[9.*, )"
             },
-            "Microsoft.NET.Test.Sdk": {
+            "Microsoft.TestPlatform.TestHost": {
               "target": "Package",
-              "version": "[17.12.0, )"
+              "version": "[18.0.1, )"
             },
             "coverlet.collector": {
               "target": "Package",
-              "version": "[6.0.2, )"
+              "version": "[6.*, )"
             },
             "xunit": {
               "target": "Package",
-              "version": "[2.9.2, )"
+              "version": "[2.*, )"
             },
             "xunit.runner.visualstudio": {
               "target": "Package",
-              "version": "[2.8.2, )"
+              "version": "[2.*, )"
             }
           },
           "imports": [

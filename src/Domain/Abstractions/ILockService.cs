@@ -8,6 +8,6 @@ namespace Domain.Abstractions;
 
 public interface ILockService
 {
-    Task<bool> TryAcquireAsync(string key, TimeSpan ttl, CancellationToken ct = default);
-    Task ReleaseAsync(string key);
+    Task<bool> AcquireAsync(string resource, TimeSpan expiry, TimeSpan wait, TimeSpan retryInterval, CancellationToken ct = default);
+    Task ReleaseAsync(string resource);
 }

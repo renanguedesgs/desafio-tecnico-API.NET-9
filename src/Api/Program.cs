@@ -17,6 +17,9 @@ builder.Services.AddDbContext<AppDbContext>(opt => opt.UseInMemoryDatabase("AppD
 // DI de repositórios e casos de uso
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<GetAllPatientsUseCase>();
+builder.Services.AddScoped<CreatePatientUseCase>();
+builder.Services.AddScoped<UpdatePatientUseCase>();
+builder.Services.AddScoped<DeletePatientUseCase>();
 
 // Redis para lock distribuído
 var redisConn = builder.Configuration.GetValue<string>("Redis:Connection", "redis:6379");
@@ -33,18 +36,21 @@ using (var scope = app.Services.CreateScope())
     {
         db.Patients.AddRange(new[]
         {
-            new Patient { Id = 1, Name = "Maria Silva", BirthDate = new DateTime(1985, 4, 12), LastExam = "Hemograma" },
-            new Patient { Id = 2, Name = "João Souza", BirthDate = new DateTime(1990, 7, 23), LastExam = "Raio-X Tórax" },
-            new Patient { Id = 3, Name = "Ana Costa", BirthDate = new DateTime(1975, 1, 5), LastExam = "Ultrassom Abdômen" },
-            new Patient { Id = 4, Name = "Carlos Lima", BirthDate = new DateTime(2001, 10, 2), LastExam = "Eletrocardiograma" },
+            new Patient(1, "Maria Silva", new DateTime(1985, 4, 12), "Hemograma"),
+            new Patient(2, "João Souza", new DateTime(1990, 7, 23), "Raio-X Tórax"),
+            new Patient(3, "Ana Costa", new DateTime(1975, 1, 5), "Ultrassom Abdômen"),
+            new Patient(4, "Carlos Lima", new DateTime(2001, 10, 2), "Eletrocardiograma"),
         });
         db.SaveChanges();
     }
 }
 
+app.UseRouting();
+app.UseAuthorization();
+
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}");
+    pattern: "{controller=Patients}/{action=Index}/{id?}");
 
 app.Run();
 
