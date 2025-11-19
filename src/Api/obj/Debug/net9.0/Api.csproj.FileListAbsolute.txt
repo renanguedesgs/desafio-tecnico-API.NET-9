@@ -124,3 +124,4 @@ C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\src\Api\obj
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\src\Api\obj\Debug\net9.0\Api.pdb
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\src\Api\obj\Debug\net9.0\Api.genruntimeconfig.cache
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\src\Api\obj\Debug\net9.0\ref\Api.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\src\Api\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
