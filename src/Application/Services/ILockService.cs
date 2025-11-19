@@ -2,13 +2,13 @@
 {
     public interface ILockService
     {
-        Task<bool> AcquireAsync(
+        Task<LockResult> AcquireAsync(
             string resource,
             TimeSpan expiry,
-            TimeSpan wait,
-            TimeSpan retryInterval,
             CancellationToken ct = default);
 
-        Task ReleaseAsync(string resource);
+        Task ReleaseAsync(string resource, string lockToken);
     }
+
+    public record LockResult(bool Acquired, string LockToken, DateTime ExpiresAt);
 }
