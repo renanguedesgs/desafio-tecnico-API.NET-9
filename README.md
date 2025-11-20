@@ -94,18 +94,35 @@ Rota principal: http://localhost:8081
 
 ## 📦 Como fazer Deploy em Servidor Linux
 
-Instalar Docker e Docker Compose:
-sudo apt update  
-sudo apt install docker.io docker-compose -y
+### 1. Instalar Docker e Docker Compose  
+Documentação oficial:  
+- https://docs.docker.com/engine/install/  
+- https://docs.docker.com/compose/install/linux/
 
-Clonar repositório no servidor:
-git clone https://github.com/seu-usuario/desafio-api-pacientes.git  
-cd desafio-api-pacientes
+Comandos:  
+`sudo apt update`  
+`sudo apt install docker.io docker-compose -y`
 
-Subir containers:
-docker-compose up -d --build
+### 2. Instalar Git (caso não esteja disponível)  
+Comando:  
+`sudo apt install git -y`
 
-Configurar reverse proxy (ex.: Nginx) para expor rota em domínio público
+### 3. Criar diretório do projeto e clonar o repositório  
+Comandos:  
+`mkdir -p /var/www`  
+`cd /var/www`  
+`git clone https://github.com/renanguedesgs/desafio-t-cnico-API.NET-9`  
+`cd desafio-t-cnico-API.NET-9`
+
+### 4. Editar variáveis de ambiente  
+Comando:  
+`nano .env`
+
+### 5. Subir containers em modo produção  
+Comando:  
+`docker-compose up -d`
+
+> ⚠️ Como a API já está exposta via porta local (`8081`, `8082`), não é necessário configurar proxy reverso como Nginx, exceto se desejar expor via domínio público ou aplicar HTTPS.
 
 ---
 
