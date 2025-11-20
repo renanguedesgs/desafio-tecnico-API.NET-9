@@ -1,172 +1,145 @@
-# 📌 Desafio Técnico – API .NET 9 / C#
+# 🚀 Desafio Técnico – API de Pacientes (.NET 9 / C#)
 
-Este repositório contém a implementação de uma API simples desenvolvida em **.NET 9**, utilizando **arquitetura organizada**, **injeção de dependência**, **Entity Framework InMemory**, **seeding de dados** e suporte a **Docker**.  
-O projeto segue as instruções do desafio e inclui documentação completa do processo de desenvolvimento.
-
----
-
-## 🚀 Tecnologias Utilizadas
-
-- .NET 9 / C#
-- ASP.NET Core
-- Entity Framework Core (InMemory)
-- Docker e Docker Compose
-- Injeção de Dependência (DI)
-- (Opcional) Redis/Postgres para Lock Distribuído
+Este repositório contém a implementação do desafio técnico solicitado: uma API em .NET 9 / C# que retorna dados de pacientes a partir de um banco InMemory e demonstra boas práticas de arquitetura, injeção de dependência, seeding de dados e execução em Docker.  
+Além disso, foi implementado opcionalmente um lock distribuído com Redis, garantindo segurança em cenários de concorrência.
 
 ---
 
-## 📂 Estrutura do Projeto
+## 📖 Documentação do Processo
 
-```
-/src
-  /Api
-  /Application
-  /Domain
-  /Infrastructure
-/docker
-README.md
-```
-
-- **Domain**: Entidades e interfaces centrais  
-- **Application**: Casos de uso e serviços  
-- **Infrastructure**: Persistência, DbContext e implementações  
-- **Api**: Controllers, rotas e configuração da aplicação  
+### 1. Abertura do Chamado
+- Primeiros passos: análise detalhada do enunciado e definição dos requisitos mínimos.  
+- Pesquisa inicial: revisão das novidades do .NET 9, boas práticas de Clean Architecture e uso de Entity Framework Core InMemory.  
+- Ferramentas utilizadas:
+  - .NET 9 SDK
+  - Entity Framework Core
+  - StackExchange.Redis
+  - xUnit + FluentAssertions para testes
+  - Docker / Docker Compose para containerização
 
 ---
 
-# 📝 Documentação do Processo de Desenvolvimento
-
-## 1️⃣ Abertura do Chamado
-
-O desenvolvimento iniciou com a leitura completa dos requisitos e definição do ambiente.  
-Passos iniciais:
-
-- Estudo das demandas do desafio  
-- Pesquisa sobre recursos atualizados do .NET 9  
-- Criação da solução, estrutura e escolha das ferramentas principais  
-- Configuração inicial da API, rota principal e arquitetura separada em camadas  
-
-Foram utilizados .NET 9, EF Core InMemory, Docker e MVC com views.
-
----
-
-## 2️⃣ Solução Escolhida
-
-A solução foi projetada com foco em organização, extensibilidade e clareza técnica.
-
-### ✔ Por que essa abordagem?
-
-- Arquitetura organizada para permitir evolução  
-- EF InMemory por ser requisito do desafio  
-- Seeding automatizado para facilitar testes  
-- Docker para padronização do ambiente  
-- Controllers com views para atender a necessidade específica da rota principal  
-
-### Alternativas consideradas:
-
-- Minimal API → descartada para manter organização em projetos maiores  
-- SQL Server / SQLite → incompatível com o requisito de banco InMemory  
-- Arquiteturas complexas (DDD completo) → exagero para o escopo do desafio  
+### 2. Solução Escolhida
+- Arquitetura em camadas (Clean Architecture):
+  - Domain → Entidades e abstrações
+  - Application → Casos de uso e serviços
+  - Infrastructure → Persistência e concorrência
+  - Api → Controllers, configuração e ponto de entrada
+- DbContext InMemory: escolhido para simplificar setup e permitir testes rápidos.  
+- Seeding de dados: pacientes iniciais são carregados automaticamente ao subir a aplicação.  
+- Injeção de dependência: todos os serviços e repositórios são registrados via ServiceCollectionExtensions.  
+- Lock distribuído (opcional): implementado com Redis para garantir exclusividade em processos concorrentes.  
+- Alternativas descartadas:
+  - Banco relacional real (ex.: SQL Server/Postgres) → descartado por aumentar complexidade sem necessidade no desafio.
+  - Lock em memória local → descartado por não funcionar em múltiplos containers.
 
 ---
 
-## 3️⃣ Possíveis Problemas Encontrados
-
-Durante o desenvolvimento, alguns desafios surgiram:
-
-### ⚠ Configuração do InMemory
-A sincronização do seeding com o Docker exigiu ajustes no ciclo de vida do DbContext.
-
-### ⚠ View + API
-Combinar o retorno de uma view com uma API exigiu configuração adicional via MVC.
-
-### ⚠ Docker
-Ajustes no Dockerfile multi-stage foram necessários para build mais rápido e eficiente.
-
-### ⚠ (Opcional) Lock Distribuído
-Foi necessário adaptar o Docker Compose e garantir que o lock funcionasse entre várias instâncias simultâneas da API.
+### 3. Possíveis Problemas na Execução
+- Configuração do Redis: ajustes de conexão entre containers no Docker Compose.  
+  - Solução: uso de IConnectionMultiplexer com string de conexão configurável via appsettings.json.  
+- Concorrência real: simulação de múltiplas chamadas simultâneas.  
+  - Solução: testes com Task.WhenAll e logs para validar comportamento.  
+- Seeding no InMemory: garantir que os dados sejam carregados apenas uma vez.  
+  - Solução: método SeedDatabase() chamado no Program.cs.
 
 ---
 
-## 4️⃣ Resultado Final
-
-A API final possui:
-
-- ✔ Rota principal exibindo dados via view  
-- ✔ Banco InMemory com seeding  
-- ✔ Injeção de dependência em serviços e repositórios  
-- ✔ Arquitetura organizada  
-- ✔ Docker funcional tanto via Dockerfile quanto Docker Compose  
-- ✔ (Opcional) Endpoint com lock distribuído funcional entre múltiplos containers  
-
-Execução simples:
-
-```bash
-docker compose up --build
-```
-
-Acesso da rota principal:
-
-```
-http://localhost:5000
-```
-
-Endpoint opcional:
-
-```
-/processar-relatorio
-```
+### 4. Resultado Final
+- API funcional com rota principal que retorna uma view com dados do banco InMemory.  
+- CRUD completo de pacientes.  
+- Endpoint /processar-relatorio que:
+  - Aguarda 5 segundos simulando processo demorado.
+  - Usa lock distribuído para impedir execução concorrente.
+  - Retorna mensagens claras em português:
+    - "Processo concluído"
+    - "Recurso ocupado. Tente novamente mais tarde."
+- Logs estruturados:
+  - Tentando adquirir o lock
+  - Lock adquirido
+  - Executando o processo
+  - Lock liberado
+- Testes unitários e de concorrência implementados.  
+- Projeto containerizado com Docker, incluindo Redis via Docker Compose.  
+- Deploy documentado para servidor Linux.
 
 ---
 
-# 🐳 Como rodar com Docker
+## ⚙️ Execução
 
-### Usando Dockerfile:
-```bash
-docker build -t desafio-api .
-docker run -p 5000:80 desafio-api
-```
+### 1. Clonar o repositório
+git clone: https://github.com/renanguedesgs/desafio-tecnico-API.NET-9
 
-### Usando Docker Compose:
-```bash
-docker compose up --build
-```
+acessar pasta: cd desafio-tecnico-API.NET-9
 
----
+### 2. Subir com Docker Compose
+docker-compose up --build
 
-# 🚀 Deploy em Servidor Linux
-
-1. Instalar Docker + Docker Compose  
-2. Clonar o repositório  
-3. Executar o ambiente:
-   ```bash
-   docker compose up -d --build
-   ```  
-4. (Opcional) Configurar NGINX como proxy reverso  
-5. Monitorar logs do container com:
-   ```bash
-   docker logs -f <container>
-   ```
+### 3. Acessar a API
+Rota principal: http://localhost:8081
 
 ---
 
-# 🔐 Desafio Opcional – Lock Distribuído
+## 🐳 Docker
 
-- Endpoint: `/processar-relatorio`  
-- Simula tarefa de 5 segundos  
-- Tenta adquirir lock usando Redis ou Postgres  
-- Apenas uma requisição é executada; demais retornam 423/409  
-- Logs:
-  - Tentando adquirir lock  
-  - Lock adquirido  
-  - Executando  
-  - Lock liberado  
-- Usado `ILockService` via DI  
-- Docker Compose sobe 2 instâncias da API + Redis/Postgres para testes reais  
+- `.dockerignore`: evita que arquivos desnecessários (logs, testes, configs locais) sejam incluídos na imagem, mantendo o build limpo e leve.
+
+- `.env`: centraliza variáveis de ambiente como conexões e portas, facilitando a troca entre ambientes sem alterar o código.
+
+- `docker-compose.yml`: orquestra os serviços da aplicação e do Redis, permitindo subir toda a stack com um único comando.
+
+- `Dockerfile`: define o build da aplicação .NET 9 com camadas otimizadas, garantindo portabilidade e execução consistente.
 
 ---
 
-# 📄 Licença
+## 📦 Como fazer Deploy em Servidor Linux
 
-Este projeto tem finalidade exclusivamente avaliativa.
+Instalar Docker e Docker Compose:
+sudo apt update  
+sudo apt install docker.io docker-compose -y
+
+Clonar repositório no servidor:
+git clone https://github.com/seu-usuario/desafio-api-pacientes.git  
+cd desafio-api-pacientes
+
+Subir containers:
+docker-compose up -d --build
+
+Configurar reverse proxy (ex.: Nginx) para expor rota em domínio público
+
+---
+
+## 📁 Estrutura de Pastas
+
+Api/  
+ ├── Extensions/  
+ ├── Seed/  
+ └── Program.cs  
+Application/  
+ ├── DTOs/  
+ ├── Services/  
+ └── UseCases/  
+Domain/  
+ ├── Abstractions/  
+ └── Entities/  
+Infrastructure/  
+ ├── Concurrency/  
+ └── Persistence/  
+Tests/  
+ └── ProcessReportTests.cs
+
+---
+
+## ✅ Critérios Atendidos
+
+[x] Organização impecável de código e arquitetura  
+[x] Disponível em repositório GitHub com URL  
+[x] Implementado com Docker e Docker Compose  
+[x] Arquitetura em camadas (Clean Architecture)  
+[x] Exemplo funcional de Injeção de Dependência  
+[x] Descritivo de deploy em servidor Linux  
+[x] DbContext configurado com InMemory  
+[x] Seeding de dados iniciais  
+[x] Lock distribuído com Redis (opcional)
+
+---
