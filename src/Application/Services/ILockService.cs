@@ -3,12 +3,15 @@
     public interface ILockService
     {
         Task<LockResult> AcquireAsync(
-            string resource,
-            TimeSpan expiry,
-            CancellationToken ct = default);
+            string resourceName,
+            TimeSpan duration,
+            CancellationToken cancellationToken = default);
 
-        Task ReleaseAsync(string resource, string lockToken);
+        Task ReleaseAsync(string resourceName, string lockToken);
     }
 
-    public record LockResult(bool Acquired, string LockToken, DateTime ExpiresAt);
+    public record LockResult(
+        bool IsAcquired,
+        string LockToken,
+        DateTime ExpirationTime);
 }

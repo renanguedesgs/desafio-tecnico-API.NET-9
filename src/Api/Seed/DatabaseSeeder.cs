@@ -20,6 +20,7 @@ public static class DatabaseSeeder
                 new Patient(3, "Ana Costa", new DateTime(1975, 1, 5), "Ultrassom Abdomen"),
                 new Patient(4, "Carlos Lima", new DateTime(2001, 10, 2), "Eletrocardiograma"),
             });
+
             db.SaveChanges();
         }
     }

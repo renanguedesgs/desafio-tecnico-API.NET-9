@@ -28,7 +28,7 @@ public class ProcessReportUseCase
         {
             _logger.LogInformation("Lock adquirido");
             _logger.LogInformation("Executando o processo");
-            Thread.Sleep(5000); // simula trabalho demorado
+            Thread.Sleep(5000);
             return "Processo concluído";
         }
         finally

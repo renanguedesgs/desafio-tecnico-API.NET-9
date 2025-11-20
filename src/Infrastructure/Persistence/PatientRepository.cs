@@ -6,35 +6,44 @@ namespace Infrastructure.Persistence;
 
 public class PatientRepository : IPatientRepository
 {
-    private readonly AppDbContext _db;
+    private readonly AppDbContext context;
 
-    public PatientRepository(AppDbContext db) => _db = db;
+    public PatientRepository(AppDbContext context)
+    {
+        this.context = context ?? throw new ArgumentNullException(nameof(context));
+    }
 
-    public IEnumerable<Patient> GetAll() =>
-        _db.Patients.OrderBy(p => p.Name).ToList();
+    public IEnumerable<Patient> GetAll()
+    {
+        return context.Patients
+            .OrderBy(p => p.Name)
+            .ToList();
+    }
 
     public Patient? GetById(int id)
     {
-        return _db.Patients.FirstOrDefault(p => p.Id == id);
+        return context.Patients
+            .FirstOrDefault(p => p.Id == id);
     }
 
     public void Add(Patient patient)
     {
-        _db.Patients.Add(patient);
-        _db.SaveChanges();
+        context.Patients.Add(patient);
+        context.SaveChanges();
     }
 
     public void Update(Patient patient)
     {
-        _db.Patients.Update(patient);
-        _db.SaveChanges();
+        context.Patients.Update(patient);
+        context.SaveChanges();
     }
 
     public void Delete(int id)
     {
-        var patient = _db.Patients.Find(id);
+        var patient = context.Patients.Find(id);
         if (patient is null) return;
-        _db.Patients.Remove(patient);
-        _db.SaveChanges();
+
+        context.Patients.Remove(patient);
+        context.SaveChanges();
     }
 }

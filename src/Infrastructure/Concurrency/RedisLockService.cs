@@ -5,44 +5,56 @@ namespace Infrastructure.Concurrency;
 
 public class RedisLockService : ILockService
 {
-    private readonly IDatabase _db;
-    private const string Prefix = "locks:";
+    private readonly IDatabase database;
+    private const string LockPrefix = "locks:";
 
-    public RedisLockService(IConnectionMultiplexer mux)
+    public RedisLockService(IConnectionMultiplexer connection)
     {
-        _db = mux.GetDatabase();
+        database = connection.GetDatabase();
     }
 
-    public async Task<bool> TryAcquireAsync(string key, TimeSpan ttl, CancellationToken ct = default)
+    public async Task<bool> TryAcquireAsync(
+        string resourceName,
+        TimeSpan lockDuration,
+        CancellationToken cancellationToken = default)
     {
-        var fullKey = Prefix + key;
+        var key = BuildKey(resourceName);
         var token = Guid.NewGuid().ToString("N");
 
-        var acquired = await _db.StringSetAsync(fullKey, token, ttl, When.NotExists);
-        return acquired;
+        return await database.StringSetAsync(
+            key,
+            token,
+            lockDuration,
+            When.NotExists);
     }
 
-    public async Task ReleaseAsync(string key, CancellationToken ct = default)
+    public async Task ReleaseAsync(
+        string resourceName,
+        CancellationToken cancellationToken = default)
     {
-        var fullKey = Prefix + key;
-        await _db.KeyDeleteAsync(fullKey);
+        var key = BuildKey(resourceName);
+        await database.KeyDeleteAsync(key);
     }
 
     public async Task<bool> AcquireWithRetryAsync(
-        string key,
-        TimeSpan ttl,
-        TimeSpan wait,
+        string resourceName,
+        TimeSpan lockDuration,
+        TimeSpan maxWaitTime,
         TimeSpan retryInterval,
-        CancellationToken ct = default)
+        CancellationToken cancellationToken = default)
     {
-        var end = DateTime.UtcNow + wait;
-        while (DateTime.UtcNow < end)
+        var deadline = DateTime.UtcNow + maxWaitTime;
+
+        while (DateTime.UtcNow < deadline)
         {
-            if (await TryAcquireAsync(key, ttl, ct))
+            if (await TryAcquireAsync(resourceName, lockDuration, cancellationToken))
                 return true;
 
-            await Task.Delay(retryInterval, ct);
+            await Task.Delay(retryInterval, cancellationToken);
         }
+
         return false;
     }
+
+    private static string BuildKey(string resourceName) => $"{LockPrefix}{resourceName}";
 }

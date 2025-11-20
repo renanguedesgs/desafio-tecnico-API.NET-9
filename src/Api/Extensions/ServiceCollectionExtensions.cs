@@ -1,6 +1,5 @@
 ﻿using Application.UseCases;
 using Domain.Abstractions;
-using Infrastructure.Concurrency;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using StackExchange.Redis;

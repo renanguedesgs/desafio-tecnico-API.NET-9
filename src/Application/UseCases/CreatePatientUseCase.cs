@@ -1,35 +1,39 @@
-﻿using Application.DTOs;
-using Domain.Abstractions;
-using Domain.Entities;
-using System;
-
-namespace Application.UseCases
+﻿namespace Application.UseCases
 {
+    using Application.DTOs;
+    using Domain.Abstractions;
+    using Domain.Entities;
+
     public class CreatePatientUseCase
     {
-        private readonly IPatientRepository _repo;
+        private readonly IPatientRepository repository;
 
-        public CreatePatientUseCase(IPatientRepository repo)
+        public CreatePatientUseCase(IPatientRepository repository)
         {
-            _repo = repo ?? throw new ArgumentNullException(nameof(repo));
+            this.repository = repository ?? throw new ArgumentNullException(nameof(repository));
         }
 
         public Patient Execute(PatientDto dto)
         {
-            if (dto is null)
-                throw new ArgumentNullException(nameof(dto), "O DTO do paciente não pode ser nulo.");
-
-            if (string.IsNullOrWhiteSpace(dto.Name))
-                throw new ArgumentException("O nome do paciente é obrigatório.", nameof(dto.Name));
-
-            if (dto.BirthDate == default)
-                throw new ArgumentException("A data de nascimento é obrigatória.", nameof(dto.BirthDate));
+            Validate(dto);
 
             var patient = Patient.Create(dto.Name, dto.BirthDate, dto.LastExam);
 
-            _repo.Add(patient);
+            repository.Add(patient);
 
             return patient;
+        }
+
+        private static void Validate(PatientDto dto)
+        {
+            if (dto is null)
+                throw new ArgumentNullException(nameof(dto));
+
+            if (string.IsNullOrWhiteSpace(dto.Name))
+                throw new ArgumentException("Nome do paciente é obrigatório.", nameof(dto.Name));
+
+            if (dto.BirthDate == default)
+                throw new ArgumentException("Data de nascimento é obrigatória.", nameof(dto.BirthDate));
         }
     }
 }

@@ -90,28 +90,28 @@ public class PatientCrudUnitTests
         var deleted = await db.Patients.FindAsync(1);
         deleted.Should().BeNull();
     }
-    #endregion
+    #endregion//Teste do relatório com lock distribuído
 
     #region Teste do relatório com lock distribuído
     private class FakeLockService : ILockService
     {
-        private bool _locked = false;
-        private bool _permitirLiberacao = true;
+        private bool isLocked = false;
+        private bool allowRelease = true;
 
-        public void BloquearLiberacao() => _permitirLiberacao = false;
-        public void PermitirLiberacao() => _permitirLiberacao = true;
+        public void BlockRelease() => allowRelease = false;
+        public void EnableRelease() => allowRelease = true;
 
         public bool TryAcquire(string key, TimeSpan ttl)
         {
-            if (_locked) return false;
-            _locked = true;
+            if (isLocked) return false;
+            isLocked = true;
             return true;
         }
 
         public void Release(string key)
         {
-            if (_permitirLiberacao)
-                _locked = false;
+            if (allowRelease)
+                isLocked = false;
         }
 
         public Task<bool> TryAcquireAsync(string key, TimeSpan ttl, CancellationToken ct = default)
@@ -131,7 +131,7 @@ public class PatientCrudUnitTests
         var logger = Microsoft.Extensions.Logging.Abstractions.NullLogger<ProcessReportUseCase>.Instance;
         var useCase = new ProcessReportUseCase(lockService, logger);
 
-        lockService.BloquearLiberacao();
+        lockService.BlockRelease();
 
         var result1 = useCase.Execute();
         result1.Should().Be("Processo concluído");
@@ -139,7 +139,7 @@ public class PatientCrudUnitTests
         var result2 = useCase.Execute();
         result2.Should().Be("Recurso ocupado. Tente novamente mais tarde.");
 
-        lockService.PermitirLiberacao();
+        lockService.EnableRelease();
         lockService.Release("report");
 
         var result3 = useCase.Execute();

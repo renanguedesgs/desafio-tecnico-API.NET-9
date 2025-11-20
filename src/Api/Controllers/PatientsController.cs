@@ -24,7 +24,6 @@ public class PatientsController : Controller
         _delete = delete;
     }
 
-    // GET /patients
     [HttpGet("/")]
     public IActionResult Index()
     {
@@ -32,7 +31,6 @@ public class PatientsController : Controller
         return View(patients);
     }
 
-    // GET /patients/{id}
     [HttpGet("details/{id:int}")]
     public IActionResult Details(int id)
     {
@@ -42,7 +40,7 @@ public class PatientsController : Controller
         return View(patient);
     }
 
-    // POST /patients
+
     [HttpPost("create")]
     public IActionResult Create(PatientDto dto)
     {
@@ -52,7 +50,6 @@ public class PatientsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // GET /patients/edit/{id}
     [HttpGet("edit/{id:int}")]
     public IActionResult Edit(int id)
     {
@@ -62,7 +59,6 @@ public class PatientsController : Controller
         return View(patient);
     }
 
-    // POST /patients/edit/{id}
     [HttpPost("edit/{id:int}")]
     public IActionResult Edit(PatientDto dto)
     {
@@ -72,7 +68,6 @@ public class PatientsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    // POST /patients/delete/{id}
     [HttpPost("delete/{id:int}")]
     public IActionResult Delete(int id)
     {

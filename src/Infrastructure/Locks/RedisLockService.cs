@@ -5,38 +5,54 @@ using Microsoft.Extensions.Configuration;
 
 public class RedisLockService : ILockService
 {
-    private readonly IConnectionMultiplexer _redis;
-    private readonly string _namespacePrefix;
-    private readonly ILogger<RedisLockService> _logger;
+    private readonly IConnectionMultiplexer connection;
+    private readonly ILogger<RedisLockService> logger;
+    private readonly string lockNamespace;
 
     public RedisLockService(
-        IConnectionMultiplexer redis,
+        IConnectionMultiplexer connection,
         ILogger<RedisLockService> logger,
-        IConfiguration config)
+        IConfiguration configuration)
     {
-        _redis = redis;
-        _logger = logger;
-        _namespacePrefix = config.GetValue<string>("LockNamespace") ?? "locks:";
+        this.connection = connection ?? throw new ArgumentNullException(nameof(connection));
+        this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        lockNamespace = configuration.GetValue<string>("LockNamespace") ?? "locks:";
     }
 
-    private string Namespaced(string key) => $"{_namespacePrefix}{key}";
+    private string BuildKey(string resourceName) => $"{lockNamespace}{resourceName}";
 
-    public async Task<bool> TryAcquireAsync(string key, TimeSpan ttl, CancellationToken ct = default)
+    public async Task<bool> TryAcquireAsync(
+        string resourceName,
+        TimeSpan lockDuration,
+        CancellationToken cancellationToken = default)
     {
-        var db = _redis.GetDatabase();
-        var namespacedKey = Namespaced(key);
+        var db = connection.GetDatabase();
+        var key = BuildKey(resourceName);
+        var token = Guid.NewGuid().ToString("N");
 
-        var acquired = await db.StringSetAsync(namespacedKey, "locked", ttl, When.NotExists);
-        _logger.LogInformation("Tentando adquirir o lock para {Key}: {Result}", namespacedKey, acquired ? "SUCESSO" : "OCUPADO");
+        var acquired = await db.StringSetAsync(
+            key,
+            token,
+            lockDuration,
+            When.NotExists);
+
+        logger.LogInformation(
+            "Lock attempt for {Key}: {Result}",
+            key,
+            acquired ? "ACQUIRED" : "BUSY");
 
         return acquired;
     }
 
-    public async Task ReleaseAsync(string key, CancellationToken ct = default)
+    public async Task ReleaseAsync(
+        string resourceName,
+        CancellationToken cancellationToken = default)
     {
-        var db = _redis.GetDatabase();
-        var namespacedKey = Namespaced(key);
-        await db.KeyDeleteAsync(namespacedKey);
-        _logger.LogInformation("Lock liberado para {Key}", namespacedKey);
+        var db = connection.GetDatabase();
+        var key = BuildKey(resourceName);
+
+        await db.KeyDeleteAsync(key);
+
+        logger.LogInformation("Lock released for {Key}", key);
     }
 }
