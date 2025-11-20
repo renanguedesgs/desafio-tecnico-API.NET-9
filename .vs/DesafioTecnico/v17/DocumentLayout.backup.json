@@ -1,20 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|Infraestrutura{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\.dockerignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
-      "RelativeMoniker": "D:0:0:{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|Infraestrutura{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|solutionrelative:.dockerignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|Infraestrutura{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\.env.example||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|Infraestrutura{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|solutionrelative:.env.example||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|Infraestrutura{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\.env||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|Infraestrutura{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}|solutionrelative:.env||{8B382828-6202-11D1-8870-0000F87579D2}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -22,47 +9,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": -1,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": ".dockerignore",
-              "DocumentMoniker": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\.dockerignore",
-              "RelativeDocumentMoniker": ".dockerignore",
-              "ToolTip": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\.dockerignore",
-              "RelativeToolTip": ".dockerignore",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-11-20T16:23:16.035Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": ".env.example",
-              "DocumentMoniker": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\.env.example",
-              "RelativeDocumentMoniker": ".env.example",
-              "ToolTip": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\.env.example",
-              "RelativeToolTip": ".env.example",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-11-20T16:22:03.622Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": ".env",
-              "DocumentMoniker": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\.env",
-              "RelativeDocumentMoniker": ".env",
-              "ToolTip": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\.env",
-              "RelativeToolTip": ".env",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-11-20T16:21:20.516Z",
-              "EditorCaption": ""
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:134:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
