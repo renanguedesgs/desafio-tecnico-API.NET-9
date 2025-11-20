@@ -73,7 +73,7 @@ git clone: https://github.com/renanguedesgs/desafio-tecnico-API.NET-9
 acessar pasta: cd desafio-tecnico-API.NET-9
 
 ### 2. Subir com Docker Compose
-docker-compose up --build
+docker-compose up -d
 
 ### 3. Acessar a API
 Rota principal: http://localhost:8081
