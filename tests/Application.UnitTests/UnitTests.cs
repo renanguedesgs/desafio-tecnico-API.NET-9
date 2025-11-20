@@ -1,10 +1,12 @@
-﻿using Domain.Entities;
+﻿using Application.UseCases;
+using Domain.Abstractions;
+using Domain.Entities;
+using FluentAssertions;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 using Xunit;
-using FluentAssertions;
 
 namespace Application.UnitTests;
 
@@ -19,6 +21,7 @@ public class PatientCrudUnitTests
         return new AppDbContext(options);
     }
 
+    #region Teste da criação de um novo paciente
     [Fact(DisplayName = "CREATE - Deve adicionar paciente com sucesso")]
     public async Task Create_Patient_Should_Work()
     {
@@ -48,7 +51,9 @@ public class PatientCrudUnitTests
         saved!.Name.Should().Be("João Souza");
         saved.LastExam.Should().Be("Raio-X");
     }
+    #endregion
 
+    #region Teste da edição de um paciente
     [Fact(DisplayName = "UPDATE - Deve atualizar exame do paciente")]
     public async Task Update_Patient_Should_Work()
     {
@@ -66,7 +71,9 @@ public class PatientCrudUnitTests
         var updated = await db.Patients.FindAsync(1);
         updated!.LastExam.Should().Be("Tomografia");
     }
+    #endregion
 
+    #region Teste da exclusão de um paciente
     [Fact(DisplayName = "DELETE - Deve remover paciente do banco")]
     public async Task Delete_Patient_Should_Work()
     {
@@ -83,4 +90,61 @@ public class PatientCrudUnitTests
         var deleted = await db.Patients.FindAsync(1);
         deleted.Should().BeNull();
     }
+    #endregion
+
+    #region Teste do relatório com lock distribuído
+    private class FakeLockService : ILockService
+    {
+        private bool _locked = false;
+        private bool _permitirLiberacao = true;
+
+        public void BloquearLiberacao() => _permitirLiberacao = false;
+        public void PermitirLiberacao() => _permitirLiberacao = true;
+
+        public bool TryAcquire(string key, TimeSpan ttl)
+        {
+            if (_locked) return false;
+            _locked = true;
+            return true;
+        }
+
+        public void Release(string key)
+        {
+            if (_permitirLiberacao)
+                _locked = false;
+        }
+
+        public Task<bool> TryAcquireAsync(string key, TimeSpan ttl, CancellationToken ct = default)
+            => Task.FromResult(TryAcquire(key, ttl));
+
+        public Task ReleaseAsync(string key, CancellationToken ct = default)
+        {
+            Release(key);
+            return Task.CompletedTask;
+        }
+    }
+
+    [Fact(DisplayName = "processamento-relatorio - Deve executar apenas uma chamada e bloquear as demais")]
+    public void ProcessReport_Should_Respect_Lock()
+    {
+        var lockService = new FakeLockService();
+        var logger = Microsoft.Extensions.Logging.Abstractions.NullLogger<ProcessReportUseCase>.Instance;
+        var useCase = new ProcessReportUseCase(lockService, logger);
+
+        lockService.BloquearLiberacao();
+
+        var result1 = useCase.Execute();
+        result1.Should().Be("Processo concluído");
+
+        var result2 = useCase.Execute();
+        result2.Should().Be("Recurso ocupado. Tente novamente mais tarde.");
+
+        lockService.PermitirLiberacao();
+        lockService.Release("report");
+
+        var result3 = useCase.Execute();
+        result3.Should().Be("Processo concluído");
+    }
+    #endregion
+
 }

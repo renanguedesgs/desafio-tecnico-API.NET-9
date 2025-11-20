@@ -58,6 +58,10 @@
               "target": "Package",
               "version": "[6.12.2, )"
             },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
             "Moq": {
               "target": "Package",
               "version": "[4.20.72, )"
@@ -213,6 +217,10 @@
               "target": "Package",
               "version": "[9.0.2, )"
             },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[10.0.0, )"
+            },
             "StackExchange.Redis": {
               "target": "Package",
               "version": "[2.9.32, )"
@@ -298,7 +306,7 @@
             },
             "xunit": {
               "target": "Package",
-              "version": "[2.9.2, )"
+              "version": "[2.9.3, )"
             },
             "xunit.extensibility.core": {
               "target": "Package",

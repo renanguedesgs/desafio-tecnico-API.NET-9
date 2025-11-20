@@ -1,118 +1,91 @@
 ﻿@model IEnumerable<Application.DTOs.PatientDto>
 @{
     ViewData["Title"] = "Pacientes";
-    Layout = null;
 }
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="utf-8" />
-    <title>@ViewData["Title"]</title>
-    <style>
-        body {
-            font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-            margin: 24px;
-        }
 
-        h1 {
-            margin-bottom: 12px;
-        }
-
-        table {
-            border-collapse: collapse;
-            width: 100%;
-        }
-
-        th, td {
-            border: 1px solid #e5e7eb;
-            padding: 8px 10px;
-            text-align: left;
-        }
-
-        thead {
-            background: #f8fafc;
-        }
-
-        small {
-            color: #64748b;
-        }
-
-        .footer {
-            margin-top: 16px;
-        }
-
-        code {
-            background: #f1f5f9;
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-
-        .btn {
-            padding: 6px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-        }
-
-        .btn-warning {
-            background: #f59e0b;
-            color: white;
-        }
-
-        .btn-danger {
-            background: #dc2626;
-            color: white;
-        }
-
-        .btn-sm {
-            font-size: 0.85rem;
-            padding: 4px 8px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Pacientes</h1>
-    <small>EF Core InMemory + seeding e arquitetura em camadas</small>
-
-    <div style="margin: 12px 0;">
-        <a href="/Patients/Create" class="btn btn-primary">Adicionar Paciente</a>
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <div>
+            <h2 class="mb-0">Pacientes</h2>
+            <small class="text-muted">EF Core InMemory + seeding e arquitetura em camadas</small>
+        </div>
+        <a href="/Patients/Create" class="btn btn-primary">
+            <i class="bi bi-person-plus-fill"></i> Adicionar Paciente
+        </a>
     </div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nome</th>
-                <th>Data de nascimento</th>
-                <th>Último exame</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var p in Model)
-            {
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-light">
                 <tr>
-                    <td>@p.Name</td>
-                    <td>@p.BirthDate.ToString("dd/MM/yyyy")</td>
-                    <td>@p.LastExam</td>
-                    <td>
-                        <a href="/Patients/Details/@p.Id" class="btn btn-primary btn-sm">Detalhes</a>
-                        <a href="/Patients/Edit/@p.Id" class="btn btn-warning btn-sm">Editar</a>
-                        <form method="post" action="/Patients/Delete/@p.Id" style="display:inline">
-                            <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-                        </form>
-                    </td>
+                    <th>Nome</th>
+                    <th>Data de nascimento</th>
+                    <th>Último exame</th>
+                    <th class="text-end">Ações</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-
-    <div class="footer">
-        <p>Endpoint de concorrência: <code>POST /processar-relatorio</code> (usa lock distribuído com Redis)</p>
+            </thead>
+            <tbody>
+                @foreach (var p in Model)
+                {
+                    <tr>
+                        <td>@p.Name</td>
+                        <td>@p.BirthDate.ToString("dd/MM/yyyy")</td>
+                        <td>@p.LastExam</td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end flex-wrap gap-2">
+                                <a href="/Patients/Details/@p.Id" class="btn btn-outline-primary btn-sm" title="Ver detalhes">
+                                    <i class="bi bi-eye-fill"></i> Detalhes
+                                </a>
+                                <a href="/Patients/Edit/@p.Id" class="btn btn-outline-warning btn-sm" title="Editar paciente">
+                                    <i class="bi bi-pencil-square"></i> Editar
+                                </a>
+                                <form method="post" action="/Patients/Delete/@p.Id" class="d-inline">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Excluir paciente">
+                                        <i class="bi bi-trash3"></i> Excluir
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
-</body>
-</html>
+
+    <div class="mt-4">
+        <strong>Concorrência com lock distribuído</strong><br />
+        Clique múltiplas vezes para validar: apenas uma requisição executa, as demais são bloqueadas.
+        <br />
+        <button id="btnProcessar" class="btn btn-outline-secondary mt-2">
+            Testar Processamento de Relatório
+        </button>
+        <div id="resultado" class="mt-2 fw-bold"></div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        document.getElementById("btnProcessar").addEventListener("click", async function () {
+            const resultDiv = document.getElementById("resultado");
+            resultDiv.innerText = "Processando...";
+            resultDiv.className = "mt-2 fw-bold text-info";
+
+            try {
+                const response = await fetch("/processar-relatorio", { method: "POST" });
+                const data = await response.json();
+
+                resultDiv.innerText = data.message;
+
+                if (data.message.includes("concluído")) {
+                    resultDiv.className = "mt-2 fw-bold text-success";
+                } else {
+                    resultDiv.className = "mt-2 fw-bold text-danger";
+                }
+            } catch (err) {
+                resultDiv.innerText = "Erro ao chamar o endpoint.";
+                resultDiv.className = "mt-2 fw-bold text-danger";
+            }
+        });
+    </script>
+}

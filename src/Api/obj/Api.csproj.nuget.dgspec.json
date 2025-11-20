@@ -136,6 +136,10 @@
               "target": "Package",
               "version": "[6.12.2, )"
             },
+            "Microsoft.Extensions.Logging": {
+              "target": "Package",
+              "version": "[9.0.2, )"
+            },
             "Moq": {
               "target": "Package",
               "version": "[4.20.72, )"
@@ -290,6 +294,10 @@
             "Microsoft.EntityFrameworkCore.InMemory": {
               "target": "Package",
               "version": "[9.0.2, )"
+            },
+            "Microsoft.Extensions.Configuration.Binder": {
+              "target": "Package",
+              "version": "[10.0.0, )"
             },
             "StackExchange.Redis": {
               "target": "Package",

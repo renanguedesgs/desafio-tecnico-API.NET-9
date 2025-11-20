@@ -13,8 +13,10 @@ public class PatientRepository : IPatientRepository
     public IEnumerable<Patient> GetAll() =>
         _db.Patients.OrderBy(p => p.Name).ToList();
 
-    public Patient? GetById(int id) =>
-        _db.Patients.FirstOrDefault(p => p.Id == id);
+    public Patient? GetById(int id)
+    {
+        return _db.Patients.FirstOrDefault(p => p.Id == id);
+    }
 
     public void Add(Patient patient)
     {

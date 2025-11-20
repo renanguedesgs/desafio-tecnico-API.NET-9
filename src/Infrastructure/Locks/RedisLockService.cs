@@ -1,71 +1,42 @@
 ﻿using Domain.Abstractions;
 using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
+using Microsoft.Extensions.Configuration;
 
-namespace Infrastructure.Locks
+public class RedisLockService : ILockService
 {
-    public class RedisLockService : ILockService
+    private readonly IConnectionMultiplexer _redis;
+    private readonly string _namespacePrefix;
+    private readonly ILogger<RedisLockService> _logger;
+
+    public RedisLockService(
+        IConnectionMultiplexer redis,
+        ILogger<RedisLockService> logger,
+        IConfiguration config)
     {
-        private readonly ILogger<RedisLockService> _logger;
-        private readonly IDatabase _db;
-        private readonly string _instanceToken;
+        _redis = redis;
+        _logger = logger;
+        _namespacePrefix = config.GetValue<string>("LockNamespace") ?? "locks:";
+    }
 
-        public RedisLockService(ILogger<RedisLockService> logger, IConnectionMultiplexer redis)
-        {
-            _logger = logger;
-            _db = redis.GetDatabase();
-            _instanceToken = Guid.NewGuid().ToString("N");
-        }
+    private string Namespaced(string key) => $"{_namespacePrefix}{key}";
 
-        public async Task<bool> AcquireAsync(string resource, TimeSpan expiry, TimeSpan wait, TimeSpan retryInterval, CancellationToken ct = default)
-        {
-            _logger.LogInformation(
-                "Tentando adquirir o lock para recurso {Resource}",
-                resource);
+    public async Task<bool> TryAcquireAsync(string key, TimeSpan ttl, CancellationToken ct = default)
+    {
+        var db = _redis.GetDatabase();
+        var namespacedKey = Namespaced(key);
 
-            var end = DateTime.UtcNow + wait;
+        var acquired = await db.StringSetAsync(namespacedKey, "locked", ttl, When.NotExists);
+        _logger.LogInformation("Tentando adquirir o lock para {Key}: {Result}", namespacedKey, acquired ? "SUCESSO" : "OCUPADO");
 
-            while (DateTime.UtcNow < end)
-            {
-                // SET resource value NX EX expiry
-                var acquired = await _db.StringSetAsync(resource, _instanceToken, expiry, When.NotExists);
-                if (acquired)
-                {
-                    _logger.LogInformation("Lock adquirido para {Resource}", resource);
-                    return true;
-                }
+        return acquired;
+    }
 
-                _logger.LogWarning(
-                "Lock em uso para {Resource}, tentando novamente em {RetryInterval} ms",
-                resource,
-                (int)wait.TotalMilliseconds);
-
-                await Task.Delay(retryInterval, ct);
-            }
-
-            _logger.LogWarning(
-                "Não foi possível adquirir o lock para {Resource} dentro de {Wait} ms",
-                resource,
-                (int)wait.TotalMilliseconds);
-
-            return false;
-        }
-
-        public async Task ReleaseAsync(string resource)
-        {
-            var script = @"
-                if redis.call('get', KEYS[1]) == ARGV[1] then
-                    return redis.call('del', KEYS[1])
-                else
-                    return 0
-                end";
-
-            var result = (int)(long)await _db.ScriptEvaluateAsync(script, new RedisKey[] { resource }, new RedisValue[] { _instanceToken });
-
-            if (result == 1)
-                _logger.LogInformation("Lock liberado para {Resource}", resource);
-            else
-                _logger.LogWarning("Lock NÃO liberado para {Resource} (não era deste token)", resource);
-        }
+    public async Task ReleaseAsync(string key, CancellationToken ct = default)
+    {
+        var db = _redis.GetDatabase();
+        var namespacedKey = Namespaced(key);
+        await db.KeyDeleteAsync(namespacedKey);
+        _logger.LogInformation("Lock liberado para {Key}", namespacedKey);
     }
 }

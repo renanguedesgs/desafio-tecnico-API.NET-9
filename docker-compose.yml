@@ -8,6 +8,8 @@ services:
       - POSTGRES_HOST=${DB_HOST}
       - ASPNETCORE_URLS=${API_URL}
     restart: always
+    depends_on:
+    - redis
 
   api2:
     build: ./
@@ -18,6 +20,8 @@ services:
       - POSTGRES_HOST=${DB_HOST}
       - ASPNETCORE_URLS=${API_URL2}
     restart: always
+    depends_on:
+    - redis
 
   db:
     image: postgres:18.1
@@ -31,6 +35,13 @@ services:
       - POSTGRES_USER=${DB_USER}
     volumes:
       - postgres_data:/var/lib/postgresql
+  
+  redis:
+    image: redis:7.2
+    container_name: redis
+    restart: always
+    ports:
+      - 6379:6379
 
 volumes:
   postgres_data:

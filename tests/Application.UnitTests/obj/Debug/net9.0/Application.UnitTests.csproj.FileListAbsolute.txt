@@ -127,3 +127,6 @@ C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Appli
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.UnitTests\obj\Debug\net9.0\Application.UnitTests.pdb
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.UnitTests\obj\Debug\net9.0\Application.UnitTests.genruntimeconfig.cache
 C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.UnitTests\obj\Debug\net9.0\ref\Application.UnitTests.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.UnitTests\bin\Debug\net9.0\Microsoft.Extensions.Configuration.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.UnitTests\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\Renan\Desktop\Projeto Teste - SMR\desafio-t-cnico-API.NET-9\tests\Application.UnitTests\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Binder.dll

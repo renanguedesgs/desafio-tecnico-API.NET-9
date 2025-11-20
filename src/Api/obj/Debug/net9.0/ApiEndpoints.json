@@ -1,7 +1,7 @@
 [
   {
-    "ContainingType": "Api.Controllers.ReportController",
-    "Method": "ProcessarRelatorio",
+    "ContainingType": "ReportController",
+    "Method": "Process",
     "RelativePath": "processar-relatorio",
     "HttpMethod": "POST",
     "IsController": true,
