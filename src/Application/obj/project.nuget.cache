@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "oKQuyLKzwIY=",
+  "dgSpecHash": "SP6YJZ7b/wE=",
   "success": true,
-  "projectFilePath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Application\\Application.csproj",
+  "projectFilePath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-tecnico-API.NET-9\\src\\Application\\Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Renan\\.nuget\\packages\\castle.core\\5.1.1\\castle.core.5.1.1.nupkg.sha512",
     "C:\\Users\\Renan\\.nuget\\packages\\fluentassertions\\6.12.2\\fluentassertions.6.12.2.nupkg.sha512",
