@@ -2112,11 +2112,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-tecnico-API.NET-9\\tests\\Application.UnitTests\\Application.UnitTests.csproj",
+      "projectUniqueName": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\tests\\Application.UnitTests\\Application.UnitTests.csproj",
       "projectName": "Application.UnitTests",
-      "projectPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-tecnico-API.NET-9\\tests\\Application.UnitTests\\Application.UnitTests.csproj",
+      "projectPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\tests\\Application.UnitTests\\Application.UnitTests.csproj",
       "packagesPath": "C:\\Users\\Renan\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-tecnico-API.NET-9\\tests\\Application.UnitTests\\obj\\",
+      "outputPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\tests\\Application.UnitTests\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -2137,8 +2137,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-tecnico-API.NET-9\\src\\Infrastructure\\Infrastructure.csproj": {
-              "projectPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-tecnico-API.NET-9\\src\\Infrastructure\\Infrastructure.csproj"
+            "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Infrastructure\\Infrastructure.csproj": {
+              "projectPath": "C:\\Users\\Renan\\Desktop\\Projeto Teste - SMR\\desafio-t-cnico-API.NET-9\\src\\Infrastructure\\Infrastructure.csproj"
             }
           }
         }
