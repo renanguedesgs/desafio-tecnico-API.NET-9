@@ -72,6 +72,7 @@ Além disso, foi implementado opcionalmente um lock distribuído com Redis, gara
 git clone: https://github.com/renanguedesgs/desafio-tecnico-API.NET-9
 
 acessar pasta: cd desafio-t-cnico-API.NET-9 
+
 acessar pasta: cd Infraestrutura
 
 ### 2. Subir com Docker Compose
