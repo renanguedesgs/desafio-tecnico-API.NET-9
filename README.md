@@ -69,7 +69,7 @@ Além disso, foi implementado opcionalmente um lock distribuído com Redis, gara
 ## ⚙️ Execução
 
 ### 1. Clonar o repositório
-git clone https://github.com/renanguedesgs/desafio-tecnico-API.NET-9
+git clone https://github.com/renanguedesgs/desafio-tecnico-API.NET-9.git
 
 acessar pasta: cd desafio-tecnico-API.NET-9
 
