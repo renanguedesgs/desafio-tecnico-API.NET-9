@@ -82,7 +82,7 @@ docker-compose up -d
 Rota principal: http://localhost:8081
 
 
-> **Nota:** É necessário garantir que o Docker esteja em execução durante o processo.
+> **Nota:** Certifique-se de que o Docker esteja em execução.
 
 ---
 
