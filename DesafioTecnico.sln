@@ -19,10 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.UnitTests", "te
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infraestrutura", "Infraestrutura", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 	ProjectSection(SolutionItems) = preProject
-		.dockerignore = .dockerignore
-		.env = .env
-		.env.example = .env.example
-		docker-compose.yml = docker-compose.yml
+		Infraestrutura\.dockerignore = Infraestrutura\.dockerignore
+		Infraestrutura\.env = Infraestrutura\.env
+		Infraestrutura\.env.example = Infraestrutura\.env.example
+		Infraestrutura\docker-compose.yml = Infraestrutura\docker-compose.yml
 	EndProjectSection
 EndProject
 Global
