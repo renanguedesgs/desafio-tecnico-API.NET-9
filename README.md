@@ -81,6 +81,9 @@ docker-compose up -d
 ### 3. Acessar a API
 Rota principal: http://localhost:8081
 
+
+> **Nota:** É necessário garantir que o Docker esteja em execução durante o processo.
+
 ---
 
 ## 🐳 Docker
