@@ -38,8 +38,8 @@ Além disso, foi implementado opcionalmente um lock distribuído com Redis, gara
 ### 3. Possíveis Problemas na Execução
 - Configuração do Redis: ajustes de conexão entre containers no Docker Compose.  
   - Solução: uso de IConnectionMultiplexer com string de conexão configurável via appsettings.json.  
-- Validação do lock distribuído: assegura que apenas uma execução do relatório ocorra por vez.
-  - Solução: o teste utiliza chamadas sequenciais ao use case, com um FakeLockService que simula aquisição e liberação do lock, garantindo que o mecanismo de concorrência seja respeitado.
+- Validação do lock distribuído: garante que apenas um relatório seja processado por vez.
+  - Solução: o teste chama o caso de uso em sequência, usando um FakeLockService que simula pegar e liberar o lock, confirmando que o controle de concorrência funciona corretamente.
 - Seeding no InMemory: garantir que os dados sejam carregados apenas uma vez.  
   - Solução: método SeedDatabase() chamado no Program.cs.
 
