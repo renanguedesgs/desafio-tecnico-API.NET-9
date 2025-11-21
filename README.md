@@ -40,6 +40,7 @@ Além disso, foi implementado opcionalmente um lock distribuído com Redis, gara
   - Solução: uso de IConnectionMultiplexer com string de conexão configurável via appsettings.json.  
 - Validação do lock distribuído: garante que apenas um relatório seja processado por vez.
   - Solução: o teste chama o caso de uso em sequência, usando um FakeLockService que simula pegar e liberar o lock, confirmando que o controle de concorrência funciona corretamente.
+  - Complemento: também foram implementados testes de concorrência real com Task.WhenAll, garantindo que apenas uma execução ocorra em chamadas simultâneas.
 - Seeding no InMemory: garantir que os dados sejam carregados apenas uma vez.  
   - Solução: método SeedDatabase() chamado no Program.cs.
 
