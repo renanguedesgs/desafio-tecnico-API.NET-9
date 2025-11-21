@@ -38,8 +38,9 @@ Além disso, foi implementado opcionalmente um lock distribuído com Redis, gara
 ### 3. Possíveis Problemas na Execução
 - Configuração do Redis: ajustes de conexão entre containers no Docker Compose.  
   - Solução: uso de IConnectionMultiplexer com string de conexão configurável via appsettings.json.  
-- Concorrência real: simulação de múltiplas chamadas simultâneas.  
-  - Solução: testes com Task.WhenAll e logs para validar comportamento.  
+- Validação do lock distribuído: garante que apenas um relatório seja processado por vez.
+  - Solução: o teste chama o caso de uso em sequência, usando um FakeLockService que simula pegar e liberar o lock, confirmando que o controle de concorrência funciona corretamente.
+  - Complemento: também foram implementados testes de concorrência real com Task.WhenAll, garantindo que apenas uma execução ocorra em chamadas simultâneas.
 - Seeding no InMemory: garantir que os dados sejam carregados apenas uma vez.  
   - Solução: método SeedDatabase() chamado no Program.cs.
 
@@ -70,7 +71,9 @@ Além disso, foi implementado opcionalmente um lock distribuído com Redis, gara
 ### 1. Clonar o repositório
 git clone: https://github.com/renanguedesgs/desafio-tecnico-API.NET-9
 
-acessar pasta: cd desafio-tecnico-API.NET-9
+acessar pasta: cd desafio-t-cnico-API.NET-9 
+
+acessar pasta: cd Infraestrutura
 
 ### 2. Subir com Docker Compose
 docker-compose up -d
@@ -141,9 +144,10 @@ Domain/
  └── Entities/  
 Infrastructure/  
  ├── Concurrency/  
+ └── Locks/  
  └── Persistence/  
 Tests/  
- └── ProcessReportTests.cs
+ └── UnitTests.cs
 
 ---
 
