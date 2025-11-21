@@ -145,6 +145,24 @@ public class PatientCrudUnitTests
         var result3 = useCase.Execute();
         result3.Should().Be("Processo concluído");
     }
+
+    [Fact(DisplayName = "processamento-relatorio - Deve bloquear chamadas concorrentes reais")]
+    public async Task ProcessReport_Should_Block_Concurrent_Calls()
+    {
+        var lockService = new FakeLockService();
+        var logger = Microsoft.Extensions.Logging.Abstractions.NullLogger<ProcessReportUseCase>.Instance;
+        var useCase = new ProcessReportUseCase(lockService, logger);
+
+        var tasks = Enumerable.Range(0, 10)
+            .Select(_ => Task.Run(() => useCase.Execute()))
+            .ToArray();
+
+        var results = await Task.WhenAll(tasks);
+
+        results.Count(r => r == "Processo concluído").Should().Be(1);
+        results.Count(r => r == "Recurso ocupado. Tente novamente mais tarde.").Should().Be(9);
+    }
+
     #endregion
 
 }
