@@ -40,8 +40,14 @@ public class PatientsController : Controller
         return View(patient);
     }
 
+    [HttpGet("create")]
+    public IActionResult Create()
+    {
+        return View();
+    }
 
     [HttpPost("create")]
+    [ValidateAntiForgeryToken]
     public IActionResult Create(PatientDto dto)
     {
         if (!ModelState.IsValid) return View(dto);
